@@ -1,0 +1,10 @@
+name: /Users/alexander/workspace/tw-paper/conda-env
+channels:
+  - defaults
+dependencies:
+  - owlready2
+  - rpy2
+  - pandas
+  - rdflib
+  - ipython
+prefix: /Users/alexander/workspace/tw-paper/conda-env
