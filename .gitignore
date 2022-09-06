@@ -2,6 +2,8 @@
 **/*.code-workspace
 conda-env/
 
+.DS_Store
+
 ### Data
 **/data/**
 **/*.ttl
