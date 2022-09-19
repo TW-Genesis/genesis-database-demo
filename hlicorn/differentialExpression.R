@@ -1,8 +1,14 @@
+
 # Imports
 library(edgeR)
 library(CoRegNet)
 
-options("mc.cores" = 8)
+# nbr of parallel processes, set based on your hardware
+options("mc.cores" = 16)
+
+# skip experiment when finding grn
+ignored_conditions = c("SCP", "SCT")
+ignored_conditions = c()
 
 # Load data
 counts <- read.csv("data/sce_RNA_RAW_counts.csv", row.names = 1)
@@ -37,7 +43,7 @@ de <- data.frame(row.names = rownames(fit))
 pValueThreshold <- 0.05
 
 for (name in levels(group)) {
-  if (name == "SCS") {
+  if (name == "SCS" || name %in% ignored_conditions) {
     next
   }
   eval(parse(
@@ -63,11 +69,49 @@ for (name in levels(group)) {
   ))
 }
 
+
+cond_fname = ".Rdata"
+if (length(ignored_conditions) > 0) {
+  cond_fname = paste("-", paste(ignored_conditions, collapse='-'),
+                   ".Rdata", sep="")
+}
+fname = paste("grn", cond_fname, sep="")
+print(fname)
+print(cond_fname)
 # # mine grn
-# grn <- hLICORN(numericalExpression  = de, TFlist = TFs$V1, parallel = "multicore", verbose = TRUE)
-# 
-# # Write to .csv
-# grnDF <- coregnetToDataframe(grn)
-# write.csv(grnDF, "data/CoRegNet_output.csv")
+# running
+grn <- hLICORN(numericalExpression  = de, TFlist = TFs$V1, parallel = "multicore", verbose = TRUE, minCoregSupport = 0.9)
+grn = refine(grn)
+save(grn, file=fname)
+print('grn saved to file')
 
+acts = c()
+reps = c()
+act_targets = c()
+rep_targets = c()
+for (tf in TFs$V1) {
+  for (targ in targets(grn, tf, 'act')) {
+    if (!is.na(targ)) {
+      acts = append(acts, tf)
+      act_targets = append(act_targets, targ)
+    }
+  }
+  for (targ in targets(grn, tf, 'rep')) {
+    if (!is.na(targ)) {
+      reps = append(reps, tf)
+      rep_targets = append(rep_targets, targ)
+    }
+  }
+}
 
+# save activators and repressors, suitable to create igraph object
+activator_frame = data.frame(regulators=acts,
+                             targets=act_targets,
+                             type='activator')
+repressor_frame = data.frame(regulators=reps,
+                             targets=rep_targets,
+                             type='repressor')
+
+fname = paste("reg_frames", cond_fname, sep="")
+save(list=c('activator_frame', 'repressor_frame'), file=fname)
+print('saved regulator frames')
