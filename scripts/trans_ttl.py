@@ -3,24 +3,7 @@ import os, re, uuid
 
 NW = re.compile("\W")
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-## Import data
-data = pd.read_csv(os.path.join(BASE, 'hlicorn/data/sce_RNA_RAW_counts.csv'),
-                   header=0, index_col=0)
-data.columns = pd.MultiIndex.from_arrays(
-    [data.columns.str[:3], data.columns.str[3:]], names=["ccp", "replicate"]
-)
-
-cultivar_uuids = {c: uuid.uuid4() for c in data.columns.get_level_values(0).unique()}
-
-cultivar = "XXX"
-fo = None
-file_cnt = 0
-# either save everything to one big .ttl file or one per experiment
-same_file = False
-if same_file:
-    fo = open(f'transcriptomics-full.ttl', 'w')
-
-    fo.write("""@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+PREFIX = """@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -46,7 +29,26 @@ if same_file:
 
 @prefix sgds: <https://www.yeastgenome.org/strain/> .
 
-@base <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/> .\n\n\n""")
+@base <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/> .\n\n\n"""
+
+## Import data
+data = pd.read_csv(os.path.join(BASE, 'hlicorn/data/sce_RNA_RAW_counts.csv'),
+                   header=0, index_col=0)
+data.columns = pd.MultiIndex.from_arrays(
+    [data.columns.str[:3], data.columns.str[3:]], names=["ccp", "replicate"]
+)
+
+cultivar_uuids = {c: uuid.uuid4()
+                  for c in data.columns.get_level_values(0).unique()}
+
+cultivar = "XXX"
+fo = None
+file_cnt = 0
+# either save everything to one big .ttl file or one per experiment
+same_file = False
+if same_file:
+    fo = open(f'transcriptomics-full.ttl', 'w')
+    fo.write(PREFIX)
 
 
 for i, sample in enumerate(data.columns):
@@ -58,33 +60,7 @@ for i, sample in enumerate(data.columns):
             fo = open(f'transcriptomics0{file_cnt}.ttl', 'w')
             file_cnt += 1
 
-            fo.write("""@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix obo: <http://purl.obolibrary.org/obo/> .
-
-@prefix ccp: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/cell_culturing_process#> .
-@prefix ccps: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/cell_culturing_process/sample#> .
-@prefix ccpo: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/cell_culturing_process/ontology#> .
-
-@prefix ys: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast#> .
-@prefix yso: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast/ontology#> .
-@prefix ysg: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast/gene#> .
-@prefix ysgl: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast/gene/location#> .
-
-
-@prefix mb: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/metabolite#> .
-@prefix ms: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/mass_spec#> .
-@prefix mso: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/mass_spec/ontology#> .
-
-@prefix ts: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/transcriptomics#> .
-@prefix tsg: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/transcriptomics/gene#> .
-@prefix tso: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/transcriptomics/ontology#> .
-
-@prefix sgds: <https://www.yeastgenome.org/strain/> .
-
-@base <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/> .\n\n\n""")
+            fo.write(PREFIX)
 
     cultivar = sample[0]
     
