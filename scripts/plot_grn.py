@@ -1,13 +1,20 @@
-import os
+import os, argparse
 import pyreadr
 import pandas as pd
 import igraph as ig
-import argparse
 import matplotlib.pyplot as plt
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# List regulator genes to be plotted,if list is empty plots entire network
-REGULATOR_GENES = ['YBR049C', 'YLR403W']
+
+# List target and regulator genes to be plotted,
+# if lists are empty plots entire network
+REGULATOR_GENES = []
+TARGET_GENES = []
+
+TARGET_GENES = ['YDR171W', 'YPL240C', 'YLR259C', 'YNL123W']
+
+with open('regulators.txt', 'r') as fi:
+    REGULATOR_GENES = fi.read().splitlines()
 
 def plot_grn(args):
     rfile = pyreadr.read_r(
@@ -15,9 +22,19 @@ def plot_grn(args):
     df_grn = pd.concat([rfile['activator_frame'], rfile['repressor_frame']])
     if len(REGULATOR_GENES) > 0:
         df_grn = df_grn.loc[df_grn['regulators'].isin(REGULATOR_GENES)]
+    if len(TARGET_GENES) > 0:
+        df_grn = df_grn.loc[df_grn['targets'].isin(TARGET_GENES)]
+    print('activators: ', len(df_grn.loc[df_grn['type'] == 'activator'].index))
+    print('reps: ', len(df_grn.loc[df_grn['type'] == 'repressor'].index))
 
     g = ig.Graph.TupleList(df_grn.itertuples(index=False), directed=True,
-                        edge_attrs="type")
+                           edge_attrs="type")
+
+    if args.add_unconnected:
+        for tg in TARGET_GENES:
+            if tg not in g.vs['name']:
+                g.add_vertices(1)
+                g.vs[-1]['name'] = tg
 
     # set colors for regulator vertices
     cols = {'activator': 'green', 'repressor': 'red'}
@@ -35,6 +52,7 @@ def plot_grn(args):
         else:
             vs_rep[edge.source] += 1
             regulators.append(i)
+
     # change color of all regulators (activating/repressing at least one gene)
     # to color between red and green depending on ratio activated/repressed
     # all non regulating genes keep a gray color
@@ -45,12 +63,37 @@ def plot_grn(args):
             v_cols[i] = (float(rep) / (act + rep),
                          float(act) / (act + rep), 0.0)
 
+    # get indices for targets, for sizes when plotting
+    targets = set()
+    for vs in g.vs:
+        if len(targets) == len(TARGET_GENES):
+            break
+        if vs['name'] in TARGET_GENES:
+            targets.add(vs.index)
+
+    if len(g.vs) > 15:
+        label_size = [9] * len(g.vs)
+        vertex_size = [15] * len(g.vs)
+        margins = 35
+        for i in targets:
+            label_size[i] = 15
+            vertex_size[i] = 30
+    else:
+        label_size = [15] * len(g.vs)
+        vertex_size = [23] * len(g.vs)
+        margins = 70
+        for i in targets:
+            label_size[i] = 20
+            vertex_size[i] = 37
+    
     g.vs["label"] = g.vs["name"]
     layout = g.layout(args.layout)
     if args.save_fig:
-        ig.plot(g, target=f'myfiletest{args.cond}.pdf', layout=layout,
-                vertex_label_size=8, vertex_color=v_cols,vertex_label_dist=1.1,
-                vertex_size=15, edge_color=[cols[t] for t in g.es['type']])
+        ig.plot(g, target=f'grn{args.cond}-{args.layout}.pdf', layout=layout,
+                vertex_label_size=label_size, vertex_color=v_cols,
+                vertex_size=vertex_size, vertex_label_dist=1.3,
+                edge_color=[cols[t] for t in g.es['type']],
+                edge_width=2.5, margin=margins)
     else:
         fig, ax = plt.subplots()
         ig.plot(g, target=ax, layout=layout, vertex_color=v_cols,
@@ -72,7 +115,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--cond', default='', type=str,
                         help='Experimental conditions to plot leave out, '
-                             'leave blank to plot grn for all conditions')
+                             'leave blank to plot grn for all conditions. '
+                             'Make sure grn for specified conditions exists.')
     parser.add_argument('--layout', default='auto', type=str,
                         help='Layoyt of plotted graph, eg kamada_kawai, see '
                              'https://igraph.org/python/tutorial/latest/'
@@ -82,6 +126,8 @@ if __name__ == '__main__':
                         help='Whether graph should be saved directly to file '
                              'or showed as plt figure. Note, figures does not '
                              'look exactly the same.')
+    parser.add_argument('--add_unconnected', type=str2bool, default=False,
+                        help='Add unconnected targets to displayed graph.')
     
     args = parser.parse_args()
     if args.cond != '' and args.cond[0] != '-':

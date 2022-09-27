@@ -4,6 +4,7 @@ from urllib.parse import quote_plus
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.ticker import MaxNLocator
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = "http://localhost:3030/paperDB?query="
@@ -29,13 +30,15 @@ PREFIXES = """
     BASE <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/>
     """
 
-def chem_tranformation(row):
-        if not isinstance(row[5], str):
-            return 1
-        elif not isinstance(row[6], str):
-            return 2
-        else:
-            return 0
+def chem_tranformation(row, info):
+    chem1 = list(info).index('GENESIS_SMPL_017-CHEBI_32588-UO_0000063')
+    chem2 = list(info).index('GENESIS_SMPL_017-CHEBI_29372-UO_1000165')
+    if not isinstance(row[chem1], str):
+        return 1
+    elif not isinstance(row[chem2], str):
+        return 2
+    else:
+        return 0
 
 def plot_conditions(args):
 
@@ -59,7 +62,8 @@ def plot_conditions(args):
 
     sel = f"""
         SELECT DISTINCT ?label ?spec ?num_val ?unit
-                            ?growth_medium ?chem_name WHERE {{
+                            ?growth_medium ?chem_name 
+                                (COUNT(?sampling) AS ?exp_count) WHERE {{
             {dataset_query}
             ?trans a tso:GENESIS_TRANSCRIPTOMETRY_001.
             ?trans obo:OBI_0000293 ?sp.
@@ -79,15 +83,15 @@ def plot_conditions(args):
                 ?what obo:IAO_0000136 ?chem.
                 ?chem a ?chem_name
             }}
-        }}
+        }} GROUP BY ?label ?spec ?num_val ?unit ?growth_medium 
+                            ?chem_name ?exp_count
         """
-    print(sel)
+
     query = BASE_URL + quote_plus(PREFIXES + sel)
     r = requests.get(query)
 
     experiments = {}
     if r.ok:
-        print(len(r.json()['results']['bindings']))
         # extract results from json response into dicts with keys with
         # information about condition type and unit, probably only suitable
         # for this plotting example
@@ -114,14 +118,11 @@ def plot_conditions(args):
         raise requests.exceptions.RequestException('Something gone wrong when '
                                                    'querying database.')
 
-    # what happens with experiment replicates?
-    # experiments['New'] = experiments['SCS']
-    # experiments['x1'] = experiments['SCP']
-    # experiments['x2'] = experiments['Ana']
     # convert results to dataframe
     df = pd.DataFrame(experiments).fillna('No modification').transpose()
+
     # add simple chemical dimension reduced from chemical modifications
-    df['added_chem'] = df.apply(chem_tranformation, axis=1)
+    df['added_chem'] = df.apply(chem_tranformation, axis=1, info=df.columns)
 
     if not args.ignore_chemicals:
         # df with number of experiments for specified conditions
@@ -146,9 +147,16 @@ def plot_conditions(args):
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
         ax.scatter(vals[:,0], vals[:,1], vals[:,2], s=sizes)
-        ax.set_xlabel('pH')
-        ax.set_ylabel(r'Temperature $\degree$C')
-        ax.set_zlabel('Chemical modifications')
+        ax.set_xlabel('pH', fontsize=16)
+        ax.set_ylabel(r'Temperature / $\degree$C', fontsize=16)
+        ax.set_zlabel('Chemical stress', fontsize=16)
+        ax.set_zticks([0, 1, 2])
+        ax.view_init(elev=20, azim=140)
+        ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+        ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+        ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+        ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+
     else:
         # as above, but only temperature and pH,
         # ie ignore chemical modifications
@@ -165,12 +173,22 @@ def plot_conditions(args):
         sizes = [400*p[i[0],i[1]] for i in idx]
 
         # 2d scatter plot
+        ax = plt.figure().gca()
         plt.scatter(vals[:,0], vals[:,1], s=sizes)
         plt.xlim(3,6)
         plt.xlabel('pH')
-        plt.ylim(27,39)
+        ax.yaxis.set_major_locator(MaxNLocator(integer=True))
         plt.ylabel(r'Temperature $\degree$C')
-
+    
+    if args.save_fig:
+        fname = 'cond.eps'
+        if len(args.process_labels[0]) > 0:
+            fname = f"cond-w-{'-'.join(args.process_labels)}.eps"
+        elif len(args.ignore_process[0]) > 0:
+            fname = f"cond-wo-{'-'.join(args.ignore_process)}.eps"
+        elif len(args.dataset_labels[0]) > 0:
+            fname = f"cond-wds-{'-'.join(args.dataset_labels)}.eps"
+        plt.savefig(fname, format='eps')
     plt.show()
 
 def str2bool(v):
@@ -201,6 +219,8 @@ if __name__ == '__main__':
                              'comma (,), eg SCS,SCP. Ignored if '
                              'process_labels are provided.')
     parser.add_argument('--ignore_chemicals', type=str2bool, default=False)
+    parser.add_argument('--save_fig', type=str2bool, default=False,
+                        help='Wether to save figure to file or not.')
     args = parser.parse_args()
     args.dataset_labels = args.dataset_labels.split(',')
     args.process_labels = args.process_labels.split(',')
