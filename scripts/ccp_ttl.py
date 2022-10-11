@@ -118,14 +118,18 @@ with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
         fo.write(f'_:regime-{uid} a ccpo:GENESIS_SMPL_006;\n')
         # regime has growth medium
         fo.write('\tccpo:GENESIS_SMPL_512 ccp:growthMedium-SM1 .\n\n')
-        # add three bioreactors per condition as there's three replicates for all conditions in this example
+
+        # add three bioreactors per condition as there's three
+        # replicates for all conditions in this example
         fo.write(f'_:bioreactor-{uid}-1 a ccpo:GENESIS_SMPL_001 .\n')
         fo.write(f'_:bioreactor-{uid}-2 a ccpo:GENESIS_SMPL_001 .\n')
         fo.write(f'_:bioreactor-{uid}-3 a ccpo:GENESIS_SMPL_001 .\n')
         fo.write(f'ccp:{uid} ccpo:GENESIS_SMPL_513 _:bioreactor-{uid}-1;\n')
         fo.write(f'\tccpo:GENESIS_SMPL_513 _:bioreactor-{uid}-2;\n')
         fo.write(f'\tccpo:GENESIS_SMPL_513 _:bioreactor-{uid}-3 .\n\n')
-        # specify regime based on condition above, first temp., then ph[MISSING!!!], then flow rate
+
+        # specify regime based on condition above,
+        # first temp., then ph, then flow rate
         fo.write(f'_:regime-{uid} ccpo:GENESIS_SMPL_506 [\n')
         fo.write('\t\ta ccpo:GENESIS_SMPL_008;\n')
         fo.write('\t\tobo:OBI_0001938 [\n')
@@ -164,22 +168,11 @@ with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
         fo.write(f'\t\t\tobo:OBI_0001937 "{cult[4]}"^^xsd:double;\n')
         fo.write('\t\t\tobo:IAO_0000039 obo:UO_0000098\n')
         fo.write('\t\t]\n\n')
-        # if len(cult[5]) > 0:
-        # fo.write('];\n')
-        # close_prev = False
-        # chems_to_add = []
+
         for chem in cult[5]:
-            # if close_prev:
             fo.write('\t];\n')
             close_prev = True
             chem_uid = uuid.uuid3(uuid.NAMESPACE_OID, chem[0])
-            # print('extra')
-            # print(mb[0])
-            # print(chem_uid)
-            # print(chem)
-            # print()
-            # fo.write()
-            # chems_to_add.append(f'mb:{chem_uid} a {chem[0]} .\n')
             chems_to_add.add(f'mb:{chem_uid} a {chem[0]} .\n')
             fo.write('\tccpo:GENESIS_SMPL_510 [\n')
             fo.write('\t\ta ccpo:GENESIS_SMPL_017 ;\n')
@@ -200,9 +193,11 @@ with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
         fo.write(f"\trdfs:label '{sample[0]}' .\n")
         fo.write(f'_:sampling-{sample_id} a ccpo:GENESIS_SMPL_021;\n')
 
-        fo.write(f'\tccpo:GENESIS_SMPL_501 _:bioreactor-{uid}-{cult_replicate};\n')
-        # modify ontology to allow to specify which culturing process sample belongs to as well
-        # fo.write(f'\tccpo:FROM_CULTURING_PROCESS ccp:{cult_id};\n')
+        fo.write('\tccpo:GENESIS_SMPL_501 '
+                 f'_:bioreactor-{uid}-{cult_replicate};\n')
+        # modify ontology to allow to specify which culturing process sample
+        # belongs to as well ? fo.write(f'\tccpo:FROM_CULTURING_PROCESS ccp:{cult_id};\n')
+
         fo.write(f'\tccpo:GENESIS_SMPL_503 _:regime-{cult_id}')
         if len(sample[1]) > 0 or len(sample[2]) > 0:
             fo.write(';\n')
