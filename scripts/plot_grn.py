@@ -13,12 +13,12 @@ TARGET_GENES = []
 
 TARGET_GENES = ['YDR171W', 'YPL240C', 'YLR259C', 'YNL123W']
 
-with open('regulators.txt', 'r') as fi:
+with open(os.path.join(BASE, 'data/regulators.txt'), 'r') as fi:
     REGULATOR_GENES = fi.read().splitlines()
 
 def plot_grn(args):
     rfile = pyreadr.read_r(
-        os.path.join(BASE, f'hlicorn/reg_frames{args.cond}.Rdata'))
+        os.path.join(BASE, f'data/reg_frames{args.cond}.Rdata'))
     df_grn = pd.concat([rfile['activator_frame'], rfile['repressor_frame']])
     if len(REGULATOR_GENES) > 0:
         df_grn = df_grn.loc[df_grn['regulators'].isin(REGULATOR_GENES)]
@@ -89,11 +89,12 @@ def plot_grn(args):
     g.vs["label"] = g.vs["name"]
     layout = g.layout(args.layout)
     if args.save_fig:
-        ig.plot(g, target=f'grn{args.cond}-{args.layout}.pdf', layout=layout,
-                vertex_label_size=label_size, vertex_color=v_cols,
-                vertex_size=vertex_size, vertex_label_dist=1.3,
-                edge_color=[cols[t] for t in g.es['type']],
-                edge_width=2.5, margin=margins)
+        ig.plot(g, layout=layout, vertex_label_size=label_size,
+                target=os.path.join(BASE,
+                                    f'figs/grn{args.cond}-{args.layout}.pdf'), 
+                vertex_color=v_cols, vertex_size=vertex_size,
+                vertex_label_dist=1.3, edge_width=2.5, margin=margins,
+                edge_color=[cols[t] for t in g.es['type']])
     else:
         fig, ax = plt.subplots()
         ig.plot(g, target=ax, layout=layout, vertex_color=v_cols,

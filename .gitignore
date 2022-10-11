@@ -4,10 +4,6 @@ conda-env/
 
 .DS_Store
 
-### Data
-**/data/**
-**/*.ttl
-
 ### Python
 
 # Byte-compiled / optimized / DLL files

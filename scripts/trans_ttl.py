@@ -32,7 +32,7 @@ PREFIX = """@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @base <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/> .\n\n\n"""
 
 ## Import data
-data = pd.read_csv(os.path.join(BASE, 'hlicorn/data/sce_RNA_RAW_counts.csv'),
+data = pd.read_csv(os.path.join(BASE, 'data/sce_RNA_RAW_counts.csv'),
                    header=0, index_col=0)
 data.columns = pd.MultiIndex.from_arrays(
     [data.columns.str[:3], data.columns.str[3:]], names=["ccp", "replicate"]
@@ -43,13 +43,12 @@ cultivar_uuids = {c: uuid.uuid4()
 
 cultivar = "XXX"
 fo = None
-file_cnt = 0
+cnt = 0
 # either save everything to one big .ttl file or one per experiment
 same_file = False
 if same_file:
-    fo = open(f'transcriptomics-full.ttl', 'w')
+    fo = open(os.path.join(BASE, f'data/transcriptomics-full.ttl'), 'w')
     fo.write(PREFIX)
-
 
 for i, sample in enumerate(data.columns):
     if not same_file:
@@ -57,9 +56,8 @@ for i, sample in enumerate(data.columns):
         if sample[0] != cultivar:
             if fo is not None:
                 fo.close()
-            fo = open(f'transcriptomics0{file_cnt}.ttl', 'w')
-            file_cnt += 1
-
+            fo = open(os.path.join(BASE, f'data/transcriptomics{cnt}.ttl'), 'w')
+            cnt += 1
             fo.write(PREFIX)
 
     cultivar = sample[0]

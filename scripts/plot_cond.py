@@ -188,7 +188,7 @@ def plot_conditions(args):
             fname = f"cond-wo-{'-'.join(args.ignore_process)}.eps"
         elif len(args.dataset_labels[0]) > 0:
             fname = f"cond-wds-{'-'.join(args.dataset_labels)}.eps"
-        plt.savefig(fname, format='eps')
+        plt.savefig(os.path.join(BASE, f'figs/{fname}'), format='eps')
     plt.show()
 
 def str2bool(v):

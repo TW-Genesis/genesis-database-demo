@@ -1,5 +1,9 @@
 import uuid
 import re
+import os
+
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # content of medium  as list with [ref to chemical, concentration, ref to unit]
 medium = [['obo:CHEBI_62946', 5, 'obo:UO_0000175'],
           ['obo:CHEBI_63036', 3, 'obo:UO_0000175'],
@@ -43,7 +47,7 @@ samplings = [['SCS1', [], [50, 'obo:UO_0000003']],
 medium_ref = 'https://www.doi.org/10.1002/yea.320080703'
 strain_ref = 'sgds:CEN.PK'
 
-with open('ccp.ttl', 'w') as fo:
+with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
     fo.write("""@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -230,13 +234,3 @@ with open('ccp.ttl', 'w') as fo:
             fo.write(f'\t\t\tobo:IAO_0000039 {sample[2][1]}\n')
             fo.write('\t\t]\n')
             fo.write('\t] .\n\n')
-
-        # else:
-        #     fo.write('] .\n')
-
-    # a = [1,2,3,4,5,5,6]
-    # a = [str(i) for i in a]
-    # fo.writelines(a)
-
-
-    # add mediem #46
