@@ -67,24 +67,24 @@ for i, sample in enumerate(data.columns):
     sample_id = 436399724531309234 + i
     # Create "transcriptometry" individual for each PROCESS x SAMPLE
     # e.g. `ts:436392344531307381 a tso:GENESIS_TRANSCRIPTOMETRY_001 .`
-    fo.write("ts:{} a tso:GENESIS_TRANSCRIPTOMETRY_001;\n".format(sample_id))
+    fo.write(f"ts:{sample_id} a tso:GENESIS_TRANSCRIPTOMETRY_001;\n")
 
     # Link a cell culturing process sample to each "transcriptometry" individual
     # e.g. `ts:436392344531307381 obo:OBI_0000293 ccps:38e2d39f-dd47-4ea1-8d65-c436da9987b4 .`
     # make sure ref to sample corresponds to what's used elsewhere..
     culture_sample_id = uuid.uuid3(uuid.NAMESPACE_OID, ''.join(sample))
     # print("ts:{} obo:OBI_0000293 ccps:{} .".format(sample_id, cultivar_uuids[cultivar]))
-    fo.write("\tobo:OBI_0000293 ccps:{} .\n".format(culture_sample_id))
+    fo.write(f"\tobo:OBI_0000293 ccps:{culture_sample_id} .\n")
 
     # Create dataset for each "transcriptometry" individual
     # e.g. `_:dataset-436392344531307381 a obo:IAO_0000100 .`
-    fo.write("_:dataset-{} a obo:IAO_0000100;\n".format(sample_id))
+    fo.write(f"_:dataset-{sample_id} a obo:IAO_0000100;\n")
     # add sample name as rdfs:label
-    fo.write('\trdfs:label "{}" .\n'.format(''.join(sample)))
+    fo.write(f"""\trdfs:label "{''.join(sample)}" .\n""")
 
     # Link dataset to sample
     # `ts:436392344531307381 obo:OBI_0000299 _:dataset-436392344531307381 .`
-    fo.write("ts:{} obo:OBI_0000299 _:dataset-{} .\n".format(sample_id, sample_id))
+    fo.write(f"ts:{sample_id} obo:OBI_0000299 _:dataset-{sample_id} .\n")
 
     for j, (orf, val) in enumerate(data[sample].items()):
         # Create datum for each gene count in the dataset
@@ -104,15 +104,12 @@ for i, sample in enumerate(data.columns):
 
         # Create genes for each row in sample
         # e.g. `tsg:YML031C-A a tso:GENESIS_TRANSCRIPTOMETRY_005 .`
-        fo.write("tsg:{} a tso:GENESIS_TRANSCRIPTOMETRY_005 .\n".format(orf))
+        fo.write(f"tsg:{orf} a tso:GENESIS_TRANSCRIPTOMETRY_005 .\n")
 
         # Link genes to cell culturing process
         # e.g. `ccps:38e2d39f-dd47-4ea1-8d65-c436da9987b4 tso:GENESIS_TRANSCRIPTOMETRY_505 tsg:YGR192C .`
-        fo.write(
-            "ccps:{} tso:GENESIS_TRANSCRIPTOMETRY_505 tsg:{} .\n".format(
-                culture_sample_id, orf
-            )
-        )
+        fo.write(f"ccps:{culture_sample_id} tso:GENESIS_TRANSCRIPTOMETRY_505 "
+                 f"tsg:{orf} .\n")
 
         ## Fill in actual data points
         # e.g.
@@ -120,22 +117,24 @@ for i, sample in enumerate(data.columns):
         #     _:geneCountDatum-436392344531307381-1
         fo.write("_:geneCountDatum-{}-{:0>4}\n".format(sample_id, j))
         #         a tso:GENESIS_TRANSCRIPTOMETRY_004;
-        fo.write("    a tso:GENESIS_TRANSCRIPTOMETRY_004;\n")
+        fo.write("\ta tso:GENESIS_TRANSCRIPTOMETRY_004;\n")
         #         obo:IAO_0000136 tsg:YGR192C;
-        fo.write("    obo:IAO_0000136 tsg:{};\n".format(orf))
+        fo.write(f"\tobo:IAO_0000136 tsg:{orf};\n")
         # GENESIS_TRANSCRIPTOMETRY_501 means has genome structure, shouldn't it be GENESIS_TRANSCRIPTOMETRY_801 or something?
         fo.write(
             "\n".join(
                 [
-                    "    obo:OBI_0001938 [",
-                    "        a tso:GENESIS_TRANSCRIPTOMETRY_003;",
-                    '        tso:GENESIS_TRANSCRIPTOMETRY_501 "{}"^^xsd:integer;'.format(val),
-                    "    ] .\n"
+                    "\tobo:OBI_0001938 [",
+                    "\t\ta tso:GENESIS_TRANSCRIPTOMETRY_003;",
+                    "\t\ttso:GENESIS_TRANSCRIPTOMETRY_501 "
+                        f'{val}"^^xsd:integer;',
+                    "\t] .\n"
                 ]
             )
         )
         #     _:geneCountVS436392344531307381-1 tso:GENESIS_TRANSCRIPTOMETRY_801 287235 .
-        fo.write("    _:geneCountVS{}-{} tso:GENESIS_TRANSCRIPTOMETRY_801 {} .\n".format(sample_id, j, val))
+        fo.write(f"\t_:geneCountVS{sample_id}-{j} "
+                 f"tso:GENESIS_TRANSCRIPTOMETRY_801 {val} .\n")
 
     fo.write("\n")
 

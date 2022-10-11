@@ -30,14 +30,14 @@ prefixes = """
     """
 
 # SPARQL query to retrieve all gene counts together with the corresponding
-# gene name and sample label.
+# gene name and dataset label.
 # Modify this to query for specific experimental conditions
 sel = f"""
-    SELECT ?sample ?gene ?cnt WHERE {{
-        ?trans rdf:type tso:GENESIS_TRANSCRIPTOMETRY_001.
+    SELECT ?data_label ?gene ?cnt WHERE {{
+        ?t rdf:type tso:GENESIS_TRANSCRIPTOMETRY_001.
         ?dataset rdf:type obo:IAO_0000100.
-        ?trans obo:OBI_0000299 ?dataset.
-        ?dataset rdfs:label ?sample.
+        ?t obo:OBI_0000299 ?dataset.
+        ?dataset rdfs:label ?data_label.
 
         ?datum rdf:type obo:IAO_0000027.
         ?dataset obo:BFO_0000051 ?datum.
@@ -53,13 +53,13 @@ r = requests.get(query)
 if r.ok:
     gs_matrix = {}
     for entry in r.json()['results']['bindings']:
-        sample = entry['sample']['value'].replace(' ', '')
+        data_label = entry['data_label']['value'].replace(' ', '')
         gene = entry['gene']['value'].split('#')[-1].replace('_', '-')
         cnt = int(entry['cnt']['value'])
         try:
-            gs_matrix[sample][gene] = cnt
+            gs_matrix[data_label][gene] = cnt
         except KeyError:
-            gs_matrix[sample] = {gene: cnt}
+            gs_matrix[data_label] = {gene: cnt}
     df = pd.DataFrame(gs_matrix)
     fp = os.path.join(BASE, 'hlicorn/data/recreated.csv')
     df.to_csv(fp)
