@@ -28,21 +28,21 @@ conditions = [['SCS', 30, 5.5, 50, 500, []],
               ['Ana', 30, 5.5, 50, 500, [['obo:CHEBI_29372', 0,
                                          'obo:UO_1000165']]]]
 # [[sample1 name, [volume, unit], [time, unit]], [...], ...], if information unavailable - enter [], each ccps is given name ccps:{uuid3(NAMESPACE_OID, sample name)}. sample name 'abcX' is assumed to be related to condition 'abc'
-samplings = [['SCS1', [], [50, 'obo:UO_0000003']],
-             ['SCS2', [], [50, 'obo:UO_0000003']],
-             ['SCS3', [], [50, 'obo:UO_0000003']],
-             ['SCT1', [], [50, 'obo:UO_0000003']],
-             ['SCT2', [], [50, 'obo:UO_0000003']],
-             ['SCT3', [], [50, 'obo:UO_0000003']],
-             ['SCP1', [], [50, 'obo:UO_0000003']],
-             ['SCP2', [], [50, 'obo:UO_0000003']],
-             ['SCP3', [], [50, 'obo:UO_0000003']],
-             ['KCl1', [], [50, 'obo:UO_0000003']],
-             ['KCl2', [], [50, 'obo:UO_0000003']],
-             ['KCl3', [], [50, 'obo:UO_0000003']],
-             ['Ana1', [], [50, 'obo:UO_0000003']],
-             ['Ana2', [], [50, 'obo:UO_0000003']],
-             ['Ana3', [], [50, 'obo:UO_0000003']]]
+samplings = [['SCS1', [], [50, 'obo:UO_0000032']],
+             ['SCS2', [], [50, 'obo:UO_0000032']],
+             ['SCS3', [], [50, 'obo:UO_0000032']],
+             ['SCT1', [], [50, 'obo:UO_0000032']],
+             ['SCT2', [], [50, 'obo:UO_0000032']],
+             ['SCT3', [], [50, 'obo:UO_0000032']],
+             ['SCP1', [], [50, 'obo:UO_0000032']],
+             ['SCP2', [], [50, 'obo:UO_0000032']],
+             ['SCP3', [], [50, 'obo:UO_0000032']],
+             ['KCl1', [], [50, 'obo:UO_0000032']],
+             ['KCl2', [], [50, 'obo:UO_0000032']],
+             ['KCl3', [], [50, 'obo:UO_0000032']],
+             ['Ana1', [], [50, 'obo:UO_0000032']],
+             ['Ana2', [], [50, 'obo:UO_0000032']],
+             ['Ana3', [], [50, 'obo:UO_0000032']]]
 
 medium_ref = 'https://www.doi.org/10.1002/yea.320080703'
 strain_ref = 'sgds:CEN.PK'
@@ -184,6 +184,7 @@ with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
             fo.write(f'\t\tobo:IAO_0000136 mb:{chem_uid}\n\n')
         fo.write('\t] .\n\n')
     fo.writelines(list(chems_to_add))
+    fo.write('\n')
 
     for sample in samplings:
         sample_id = uuid.uuid3(uuid.NAMESPACE_OID, sample[0])
@@ -192,9 +193,10 @@ with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
         fo.write(f'ccps:{sample_id} a obo:OBI_0000747;\n')
         fo.write(f"\trdfs:label '{sample[0]}' .\n")
         fo.write(f'_:sampling-{sample_id} a ccpo:GENESIS_SMPL_021;\n')
-
+        # has output:
+        fo.write(f'\tobo:OBI_0000299 ccps:{sample_id};\n')
         fo.write('\tccpo:GENESIS_SMPL_501 '
-                 f'_:bioreactor-{uid}-{cult_replicate};\n')
+                 f'_:bioreactor-{cult_id}-{cult_replicate};\n')
         # modify ontology to allow to specify which culturing process sample
         # belongs to as well ? fo.write(f'\tccpo:FROM_CULTURING_PROCESS ccp:{cult_id};\n')
 
@@ -203,8 +205,7 @@ with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
             fo.write(';\n')
         else:
             fo.write(' .\n')
-        # has output:
-        fo.write(f'\tobo:OBI_0000299 ccps:{sample_id};\n')
+        
         if len(sample[1]) > 0:
             # add volume
             fo.write('\tccpo:GENESIS_SMPL_509 [\n')

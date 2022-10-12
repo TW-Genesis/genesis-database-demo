@@ -61,7 +61,7 @@ if r.ok:
         except KeyError:
             gs_matrix[data_label] = {gene: cnt}
     df = pd.DataFrame(gs_matrix)
-    fp = os.path.join(BASE, 'hlicorn/data/recreated.csv')
+    fp = os.path.join(BASE, 'data/recreated.csv')
     df.to_csv(fp)
     print('saved to csv file at:')
     print(fp)

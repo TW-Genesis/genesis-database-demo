@@ -125,7 +125,7 @@ for i, sample in enumerate(data.columns):
                     "\tobo:OBI_0001938 [",
                     "\t\ta tso:GENESIS_TRANSCRIPTOMETRY_003;",
                     "\t\ttso:GENESIS_TRANSCRIPTOMETRY_501 "
-                        f'{val}"^^xsd:integer;',
+                        f'"{val}"^^xsd:integer;',
                     "\t] .\n"
                 ]
             )

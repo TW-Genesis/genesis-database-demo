@@ -361,250 +361,251 @@ _:regime-5e3df598-8ef1-3e9b-929c-a7cd31ccb752 ccpo:GENESIS_SMPL_506 [
 
 	] .
 
-mb:17847507-724d-3c1e-b6c8-b86994012cbf a obo:CHEBI_32588 .
-mb:54ca4949-e950-3e86-9b9d-b33e61bf0bb1 a obo:CHEBI_63036 .
-mb:b016c461-dd52-39b0-9a57-afd9a5d2fe03 a obo:CHEBI_62946 .
-mb:7c968259-e7c3-30f0-b22a-4eb11ff0aaad a obo:CHEBI_53514 .
 mb:29b6e80f-7d32-3191-b8e0-fa9b0c824da3 a obo:CHEBI_29372 .
+mb:17847507-724d-3c1e-b6c8-b86994012cbf a obo:CHEBI_32588 .
 mb:84eb96ce-73ed-30c4-8c2f-bb789040c300 a obo:CHEBI_17234 .
+mb:b016c461-dd52-39b0-9a57-afd9a5d2fe03 a obo:CHEBI_62946 .
 mb:ad05dba4-7961-3d8e-b832-2474b760edb0 a obo:CHEBI_31795 .
+mb:54ca4949-e950-3e86-9b9d-b33e61bf0bb1 a obo:CHEBI_63036 .
+mb:7c968259-e7c3-30f0-b22a-4eb11ff0aaad a obo:CHEBI_53514 .
+
 ccps:174cca76-940d-3eaa-a03b-d5e42c1a705a a obo:OBI_0000747;
 	rdfs:label 'SCS1' .
 _:sampling-174cca76-940d-3eaa-a03b-d5e42c1a705a a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-1;
-	ccpo:GENESIS_SMPL_503 _:regime-2289cb76-6919-3256-9597-f34c283f5c77;
 	obo:OBI_0000299 ccps:174cca76-940d-3eaa-a03b-d5e42c1a705a;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-2289cb76-6919-3256-9597-f34c283f5c77-1;
+	ccpo:GENESIS_SMPL_503 _:regime-2289cb76-6919-3256-9597-f34c283f5c77;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:174cca76-940d-3eaa-a03b-d5e42c1a705a;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:8239284e-51c8-3ca9-a161-5793d81e5f84 a obo:OBI_0000747;
 	rdfs:label 'SCS2' .
 _:sampling-8239284e-51c8-3ca9-a161-5793d81e5f84 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-2;
-	ccpo:GENESIS_SMPL_503 _:regime-2289cb76-6919-3256-9597-f34c283f5c77;
 	obo:OBI_0000299 ccps:8239284e-51c8-3ca9-a161-5793d81e5f84;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-2289cb76-6919-3256-9597-f34c283f5c77-2;
+	ccpo:GENESIS_SMPL_503 _:regime-2289cb76-6919-3256-9597-f34c283f5c77;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:8239284e-51c8-3ca9-a161-5793d81e5f84;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:d178ee75-ea65-3459-875b-574da0cac685 a obo:OBI_0000747;
 	rdfs:label 'SCS3' .
 _:sampling-d178ee75-ea65-3459-875b-574da0cac685 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-3;
-	ccpo:GENESIS_SMPL_503 _:regime-2289cb76-6919-3256-9597-f34c283f5c77;
 	obo:OBI_0000299 ccps:d178ee75-ea65-3459-875b-574da0cac685;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-2289cb76-6919-3256-9597-f34c283f5c77-3;
+	ccpo:GENESIS_SMPL_503 _:regime-2289cb76-6919-3256-9597-f34c283f5c77;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:d178ee75-ea65-3459-875b-574da0cac685;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:6e64d395-4343-377f-9788-899205b61ef8 a obo:OBI_0000747;
 	rdfs:label 'SCT1' .
 _:sampling-6e64d395-4343-377f-9788-899205b61ef8 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-1;
-	ccpo:GENESIS_SMPL_503 _:regime-80c6d730-c239-3f31-ac6e-38c76834dab4;
 	obo:OBI_0000299 ccps:6e64d395-4343-377f-9788-899205b61ef8;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-80c6d730-c239-3f31-ac6e-38c76834dab4-1;
+	ccpo:GENESIS_SMPL_503 _:regime-80c6d730-c239-3f31-ac6e-38c76834dab4;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:6e64d395-4343-377f-9788-899205b61ef8;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:407af81a-a0a3-392c-a8ce-89986ebf1dcb a obo:OBI_0000747;
 	rdfs:label 'SCT2' .
 _:sampling-407af81a-a0a3-392c-a8ce-89986ebf1dcb a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-2;
-	ccpo:GENESIS_SMPL_503 _:regime-80c6d730-c239-3f31-ac6e-38c76834dab4;
 	obo:OBI_0000299 ccps:407af81a-a0a3-392c-a8ce-89986ebf1dcb;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-80c6d730-c239-3f31-ac6e-38c76834dab4-2;
+	ccpo:GENESIS_SMPL_503 _:regime-80c6d730-c239-3f31-ac6e-38c76834dab4;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:407af81a-a0a3-392c-a8ce-89986ebf1dcb;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:984638ca-dad7-3fbe-9311-eb8f1c26adae a obo:OBI_0000747;
 	rdfs:label 'SCT3' .
 _:sampling-984638ca-dad7-3fbe-9311-eb8f1c26adae a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-3;
-	ccpo:GENESIS_SMPL_503 _:regime-80c6d730-c239-3f31-ac6e-38c76834dab4;
 	obo:OBI_0000299 ccps:984638ca-dad7-3fbe-9311-eb8f1c26adae;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-80c6d730-c239-3f31-ac6e-38c76834dab4-3;
+	ccpo:GENESIS_SMPL_503 _:regime-80c6d730-c239-3f31-ac6e-38c76834dab4;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:984638ca-dad7-3fbe-9311-eb8f1c26adae;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:69d36fef-1e3d-3956-afed-92a50b7ef632 a obo:OBI_0000747;
 	rdfs:label 'SCP1' .
 _:sampling-69d36fef-1e3d-3956-afed-92a50b7ef632 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-1;
-	ccpo:GENESIS_SMPL_503 _:regime-42feefc7-2024-33dd-a177-a5148a6f96c0;
 	obo:OBI_0000299 ccps:69d36fef-1e3d-3956-afed-92a50b7ef632;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-42feefc7-2024-33dd-a177-a5148a6f96c0-1;
+	ccpo:GENESIS_SMPL_503 _:regime-42feefc7-2024-33dd-a177-a5148a6f96c0;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:69d36fef-1e3d-3956-afed-92a50b7ef632;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:3315e4dd-3018-3848-9ecf-141beccc4094 a obo:OBI_0000747;
 	rdfs:label 'SCP2' .
 _:sampling-3315e4dd-3018-3848-9ecf-141beccc4094 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-2;
-	ccpo:GENESIS_SMPL_503 _:regime-42feefc7-2024-33dd-a177-a5148a6f96c0;
 	obo:OBI_0000299 ccps:3315e4dd-3018-3848-9ecf-141beccc4094;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-42feefc7-2024-33dd-a177-a5148a6f96c0-2;
+	ccpo:GENESIS_SMPL_503 _:regime-42feefc7-2024-33dd-a177-a5148a6f96c0;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:3315e4dd-3018-3848-9ecf-141beccc4094;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:a489cecc-ce9b-3789-b6c1-ee1bad390b87 a obo:OBI_0000747;
 	rdfs:label 'SCP3' .
 _:sampling-a489cecc-ce9b-3789-b6c1-ee1bad390b87 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-3;
-	ccpo:GENESIS_SMPL_503 _:regime-42feefc7-2024-33dd-a177-a5148a6f96c0;
 	obo:OBI_0000299 ccps:a489cecc-ce9b-3789-b6c1-ee1bad390b87;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-42feefc7-2024-33dd-a177-a5148a6f96c0-3;
+	ccpo:GENESIS_SMPL_503 _:regime-42feefc7-2024-33dd-a177-a5148a6f96c0;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:a489cecc-ce9b-3789-b6c1-ee1bad390b87;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:e8790d3e-f3f1-3c74-92af-58bd6359b838 a obo:OBI_0000747;
 	rdfs:label 'KCl1' .
 _:sampling-e8790d3e-f3f1-3c74-92af-58bd6359b838 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-1;
-	ccpo:GENESIS_SMPL_503 _:regime-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7;
 	obo:OBI_0000299 ccps:e8790d3e-f3f1-3c74-92af-58bd6359b838;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7-1;
+	ccpo:GENESIS_SMPL_503 _:regime-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:e8790d3e-f3f1-3c74-92af-58bd6359b838;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:730011be-09a4-3a41-a43c-4c836ddb8c22 a obo:OBI_0000747;
 	rdfs:label 'KCl2' .
 _:sampling-730011be-09a4-3a41-a43c-4c836ddb8c22 a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-2;
-	ccpo:GENESIS_SMPL_503 _:regime-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7;
 	obo:OBI_0000299 ccps:730011be-09a4-3a41-a43c-4c836ddb8c22;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7-2;
+	ccpo:GENESIS_SMPL_503 _:regime-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:730011be-09a4-3a41-a43c-4c836ddb8c22;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:315c62d9-c7bb-34b2-8311-dc8b2b5fba7e a obo:OBI_0000747;
 	rdfs:label 'KCl3' .
 _:sampling-315c62d9-c7bb-34b2-8311-dc8b2b5fba7e a ccpo:GENESIS_SMPL_021;
-	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-3;
-	ccpo:GENESIS_SMPL_503 _:regime-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7;
 	obo:OBI_0000299 ccps:315c62d9-c7bb-34b2-8311-dc8b2b5fba7e;
+	ccpo:GENESIS_SMPL_501 _:bioreactor-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7-3;
+	ccpo:GENESIS_SMPL_503 _:regime-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:315c62d9-c7bb-34b2-8311-dc8b2b5fba7e;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:7a6b30b0-e241-39cc-a8de-524dfaa4d50e a obo:OBI_0000747;
 	rdfs:label 'Ana1' .
 _:sampling-7a6b30b0-e241-39cc-a8de-524dfaa4d50e a ccpo:GENESIS_SMPL_021;
+	obo:OBI_0000299 ccps:7a6b30b0-e241-39cc-a8de-524dfaa4d50e;
 	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-1;
 	ccpo:GENESIS_SMPL_503 _:regime-5e3df598-8ef1-3e9b-929c-a7cd31ccb752;
-	obo:OBI_0000299 ccps:7a6b30b0-e241-39cc-a8de-524dfaa4d50e;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:7a6b30b0-e241-39cc-a8de-524dfaa4d50e;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:1c217de6-5a4e-31e4-a92c-bbf29075ac77 a obo:OBI_0000747;
 	rdfs:label 'Ana2' .
 _:sampling-1c217de6-5a4e-31e4-a92c-bbf29075ac77 a ccpo:GENESIS_SMPL_021;
+	obo:OBI_0000299 ccps:1c217de6-5a4e-31e4-a92c-bbf29075ac77;
 	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-2;
 	ccpo:GENESIS_SMPL_503 _:regime-5e3df598-8ef1-3e9b-929c-a7cd31ccb752;
-	obo:OBI_0000299 ccps:1c217de6-5a4e-31e4-a92c-bbf29075ac77;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:1c217de6-5a4e-31e4-a92c-bbf29075ac77;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
 ccps:f3948a6b-26aa-3d11-aa16-876733ab0ccd a obo:OBI_0000747;
 	rdfs:label 'Ana3' .
 _:sampling-f3948a6b-26aa-3d11-aa16-876733ab0ccd a ccpo:GENESIS_SMPL_021;
+	obo:OBI_0000299 ccps:f3948a6b-26aa-3d11-aa16-876733ab0ccd;
 	ccpo:GENESIS_SMPL_501 _:bioreactor-5e3df598-8ef1-3e9b-929c-a7cd31ccb752-3;
 	ccpo:GENESIS_SMPL_503 _:regime-5e3df598-8ef1-3e9b-929c-a7cd31ccb752;
-	obo:OBI_0000299 ccps:f3948a6b-26aa-3d11-aa16-876733ab0ccd;
 	ccpo:GENESIS_SMPL_502 [
 		a obo:IAO_0000416;
 		obo:IAO_0000136 ccps:f3948a6b-26aa-3d11-aa16-876733ab0ccd;
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_011;
 			obo:OBI_0001937 "50"^^xsd:integer;
-			obo:IAO_0000039 obo:UO_0000003
+			obo:IAO_0000039 obo:UO_0000032
 		]
 	] .
 
