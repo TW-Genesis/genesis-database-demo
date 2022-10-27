@@ -5,7 +5,7 @@ $ conda create --name R && \\
     conda activate R && \\
     conda install -c conda-forge r-base=4.2.1
 ```
-After installing dependencies from `renv.lock`, run algorithm (from the hlicorn directory), e.g. with the following command
+After installing dependencies from `renv.lock`, run algorithm (from the hlicorn directory) with the following command
 ```
 $ Rscript differentialExpression.R
 ```
