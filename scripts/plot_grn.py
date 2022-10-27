@@ -37,7 +37,10 @@ def plot_grn(args):
                 g.vs[-1]['name'] = tg
 
     # set colors for regulator vertices
-    cols = {'activator': 'green', 'repressor': 'red'}
+    # red/plt blue
+    cols = {'activator': (30/255, 116/255, 179/255), 'repressor': 'red'}
+    # red/green
+    # cols = {'activator': 'green', 'repressor': 'red'}
     v_cols = [(0.5,0.5,0.5)] * len(g.vs['name'])
 
     # lists to keep track of number of genes each gene
@@ -60,9 +63,14 @@ def plot_grn(args):
         act = vs_act[i]
         rep = vs_rep[i]
         if act + rep > 0:
-            v_cols[i] = (float(rep) / (act + rep),
-                         float(act) / (act + rep), 0.0)
-
+            # red/green
+            # v_cols[i] = (float(rep) / (act + rep),
+            #              float(act) / (act + rep), 0.0)
+            # red/plt blue
+            v_cols[i] = (float(rep)/(act+rep) + float(act)/(act+rep) * 30/255,
+                         float(act)/(act+rep) * 116/255,
+                         float(act) / (act + rep) * 179/255)
+            
     # get indices for targets, for sizes when plotting
     targets = set()
     for vs in g.vs:
