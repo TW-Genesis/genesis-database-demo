@@ -145,7 +145,7 @@ with open(os.path.join(BASE, 'data/ccp.ttl'), 'w') as fo:
         fo.write('\t\tobo:OBI_0001938 [\n')
         fo.write('\t\t\ta ccpo:GENESIS_SMPL_024;\n')
         fo.write(f'\t\t\tobo:OBI_0001937 "{cult[2]}"^^xsd:double;\n')
-        fo.write('\t\t\tobo:IAO_0000039 ccpo:UO_0000186\n')
+        fo.write('\t\t\tobo:IAO_0000039 obo:UO_0000196\n')
         fo.write('\t\t]\n')
         fo.write('\t];\n\n')
         

@@ -109,7 +109,7 @@ _:regime-2289cb76-6919-3256-9597-f34c283f5c77 ccpo:GENESIS_SMPL_506 [
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_024;
 			obo:OBI_0001937 "5.5"^^xsd:double;
-			obo:IAO_0000039 ccpo:UO_0000186
+			obo:IAO_0000039 obo:UO_0000196
 		]
 	];
 
@@ -161,7 +161,7 @@ _:regime-80c6d730-c239-3f31-ac6e-38c76834dab4 ccpo:GENESIS_SMPL_506 [
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_024;
 			obo:OBI_0001937 "5.5"^^xsd:double;
-			obo:IAO_0000039 ccpo:UO_0000186
+			obo:IAO_0000039 obo:UO_0000196
 		]
 	];
 
@@ -213,7 +213,7 @@ _:regime-42feefc7-2024-33dd-a177-a5148a6f96c0 ccpo:GENESIS_SMPL_506 [
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_024;
 			obo:OBI_0001937 "3.5"^^xsd:double;
-			obo:IAO_0000039 ccpo:UO_0000186
+			obo:IAO_0000039 obo:UO_0000196
 		]
 	];
 
@@ -265,7 +265,7 @@ _:regime-7fb6cffd-23d1-3b69-9fbe-d97ab588f5b7 ccpo:GENESIS_SMPL_506 [
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_024;
 			obo:OBI_0001937 "5.5"^^xsd:double;
-			obo:IAO_0000039 ccpo:UO_0000186
+			obo:IAO_0000039 obo:UO_0000196
 		]
 	];
 
@@ -327,7 +327,7 @@ _:regime-5e3df598-8ef1-3e9b-929c-a7cd31ccb752 ccpo:GENESIS_SMPL_506 [
 		obo:OBI_0001938 [
 			a ccpo:GENESIS_SMPL_024;
 			obo:OBI_0001937 "5.5"^^xsd:double;
-			obo:IAO_0000039 ccpo:UO_0000186
+			obo:IAO_0000039 obo:UO_0000196
 		]
 	];
 
@@ -361,13 +361,13 @@ _:regime-5e3df598-8ef1-3e9b-929c-a7cd31ccb752 ccpo:GENESIS_SMPL_506 [
 
 	] .
 
+mb:7c968259-e7c3-30f0-b22a-4eb11ff0aaad a obo:CHEBI_53514 .
+mb:b016c461-dd52-39b0-9a57-afd9a5d2fe03 a obo:CHEBI_62946 .
+mb:54ca4949-e950-3e86-9b9d-b33e61bf0bb1 a obo:CHEBI_63036 .
+mb:84eb96ce-73ed-30c4-8c2f-bb789040c300 a obo:CHEBI_17234 .
 mb:29b6e80f-7d32-3191-b8e0-fa9b0c824da3 a obo:CHEBI_29372 .
 mb:17847507-724d-3c1e-b6c8-b86994012cbf a obo:CHEBI_32588 .
-mb:84eb96ce-73ed-30c4-8c2f-bb789040c300 a obo:CHEBI_17234 .
-mb:b016c461-dd52-39b0-9a57-afd9a5d2fe03 a obo:CHEBI_62946 .
 mb:ad05dba4-7961-3d8e-b832-2474b760edb0 a obo:CHEBI_31795 .
-mb:54ca4949-e950-3e86-9b9d-b33e61bf0bb1 a obo:CHEBI_63036 .
-mb:7c968259-e7c3-30f0-b22a-4eb11ff0aaad a obo:CHEBI_53514 .
 
 ccps:174cca76-940d-3eaa-a03b-d5e42c1a705a a obo:OBI_0000747;
 	rdfs:label 'SCS1' .
