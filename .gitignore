@@ -3,6 +3,7 @@
 conda-env/
 
 .DS_Store
+queries
 
 ### Python
 
