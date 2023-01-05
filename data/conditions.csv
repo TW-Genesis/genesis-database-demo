@@ -1,0 +1,6 @@
+label,temp,temp unit,pH,volumetric flow rate,flow rate unit,chemical modification,chemical modification amount,chemical modification unit
+SCS,30,obo:UO_0000027,5.5,50,obo:NCIT_C66962,,,
+SCT,36,obo:UO_0000027,5.5,50,obo:NCIT_C66962,,,
+SCP,30,obo:UO_0000027,3.5,50,obo:NCIT_C66962,,,
+KCl,30,obo:UO_0000027,5.5,50,obo:NCIT_C66962,obo:CHEBI_32588,600,obo:UO_0000063
+Ana,30,obo:UO_0000027,5.5,50,obo:NCIT_C66962,obo:CHEBI_29372,0,obo:UO_1000165
