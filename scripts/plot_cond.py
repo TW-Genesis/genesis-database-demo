@@ -1,4 +1,3 @@
-from concurrent.futures import process
 import os, requests, argparse
 from urllib.parse import quote_plus
 import pandas as pd
@@ -7,35 +6,21 @@ import numpy as np
 from matplotlib.ticker import MaxNLocator
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = "http://localhost:3030/paperDB?query="
+BASE_URL = "http://localhost:3030/newDB?query="
 PREFIXES = """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX obo: <http://purl.obolibrary.org/obo/>
-    PREFIX ccp: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/cell_culturing_process#>
-    PREFIX ccps: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/cell_culturing_process/sample#>
-    PREFIX ccpo: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/cell_culturing_process/ontology#>
-    PREFIX ys: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast#>
-    PREFIX yso: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast/ontology#>
-    PREFIX ysg: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast/gene#>
-    PREFIX ysgl: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/yeast/gene/location#>
-    PREFIX mb: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/metabolite#>
-    PREFIX mso: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/mass_spec/ontology#>
-    PREFIX ts: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/transcriptomics#>
-    PREFIX tsg: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/transcriptomics/gene#>
-    PREFIX tso: <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/transcriptomics/ontology#>
 
-    BASE <http://www.semanticweb.org/rushikeshhalle/ontologies/2021/11/>
+    PREFIX genesis: <http://www.semanticweb.org/genesis/ontologies/ccp-ontology#>
     """
 
-def chem_tranformation(row, info):
-    chem1 = list(info).index('GENESIS_SMPL_017-CHEBI_32588-UO_0000063')
-    chem2 = list(info).index('GENESIS_SMPL_017-CHEBI_29372-UO_1000165')
-    if not isinstance(row[chem1], str):
+def numeric_representation(row):
+    if row['chem'] == 'CHEBI_32588':
         return 1
-    elif not isinstance(row[chem2], str):
+    elif row['chem'] == 'CHEBI_29372':
         return 2
     else:
         return 0
@@ -46,10 +31,8 @@ def plot_conditions(args):
     proc_query = ""
     if len(args.dataset_labels[0]) > 0:
         data_labels = "'" + "' '".join(args.dataset_labels) + "'"
-        dataset_query = f"""?dataset a obo:IAO_0000100.
-            ?dataset rdfs:label ?data_labels.
+        dataset_query = f"""?sample rdfs:label ?data_labels.
             VALUES ?data_labels {{{data_labels}}}.
-            ?trans obo:OBI_0000299 ?dataset.
                         """
     if len(args.process_labels[0]) > 0:
         proc_labels = "'" + "' '".join(args.process_labels) + "'"
@@ -60,57 +43,43 @@ def plot_conditions(args):
             VALUES ?label {{{ignored_labels}}}.
             }}."""
 
-    sel = f"""
-        SELECT DISTINCT ?label ?spec ?num_val ?unit
-                            ?growth_medium ?chem_name 
-                                (COUNT(?sampling) AS ?exp_count) WHERE {{
-            {dataset_query}
-            ?trans a tso:GENESIS_TRANSCRIPTOMETRY_001.
-            ?trans obo:OBI_0000293 ?sp.
-            ?sampling obo:OBI_0000299 ?sp.
-            ?sampling ccpo:GENESIS_SMPL_503 ?reg.
-            ?proc ccpo:GENESIS_SMPL_508 ?reg.
-            ?proc rdfs:label ?label.
-            {proc_query}
-            ?reg ccpo:GENESIS_SMPL_512 ?growth_medium.
-            ?reg ?has_what ?what.
-            ?what a ?spec.
-            ?what obo:OBI_0001938 ?vs.
-            ?vs obo:OBI_0001937 ?num_val.
-            ?vs obo:IAO_0000039 ?unit.
-            OPTIONAL {{
-                ?what a ccpo:GENESIS_SMPL_017.
-                ?what obo:IAO_0000136 ?chem.
-                ?chem a ?chem_name
-            }}
-        }} GROUP BY ?label ?spec ?num_val ?unit ?growth_medium 
-                            ?chem_name ?exp_count
-        """
-
+    sel = f"""SELECT DISTINCT ?label ?gm ?temp ?ph ?chem ?chem_conc ?chem_conc_unit (COUNT(?sample) AS ?exp_count) WHERE {{
+                ?trans a obo:NCIT_C153189;
+                    obo:OBI_0000293 ?sample.
+                ?sample a obo:OBI_0000747;
+                    ^obo:OBI_0000299 ?sampling.
+                {dataset_query}
+                ?regime ^genesis:GEN_000018 / genesis:GEN_000009 ?sampling;
+                    rdfs:label ?label;
+                    genesis:GEN_000014 ?gm;
+                    genesis:GEN_000012 / obo:OBI_0001937 ?temp;
+                    genesis:GEN_000013 / obo:OBI_0001937 ?ph.
+                {proc_query}
+                OPTIONAL {{
+                    ?regime genesis:GEN_000017 ?conc.
+                    ?conc obo:IAO_0000136 / a ?chem;
+                        obo:IAO_0000039 ?chem_conc_unit;
+                        obo:OBI_0001937 ?chem_conc.
+                }}
+                    
+    }} GROUP BY ?label ?gm ?temp ?ph ?chem ?chem_conc ?chem_conc_unit ?exp_count"""
     query = BASE_URL + quote_plus(PREFIXES + sel)
     r = requests.get(query)
 
-    experiments = {}
+    df = pd.DataFrame()
+    df.index = ['temp', 'pH', 'gm', 'chem', 'no_exp']
+
     if r.ok:
         # extract results from json response into dicts with keys with
         # information about condition type and unit, probably only suitable
         # for this plotting example
         for res in r.json()['results']['bindings']:
             cond_label = res['label']['value']
-            if cond_label not in experiments.keys():
-                experiments[cond_label] = {}
+            df[cond_label] = [float(res['temp']['value']),
+                              float(res['ph']['value']),
+                              res['gm']['value'].split('#')[-1],
+                              res['chem']['value'].split('/')[-1] if 'chem' in res else 'na', int(res['exp_count']['value'])]
 
-            experiments[cond_label]['growth_medium'] = res['growth_medium']\
-                ['value'].split('#')[-1]
-            cond_type = res['spec']['value'].split('/')[-1].split('#')[-1]
-            unit = res['unit']['value'].split('/')[-1].split('#')[-1]
-            if 'chem_name' in res.keys():
-                chem = res['chem_name']['value'].split('/')[-1]
-                key = f"{cond_type}-{chem}-{unit}"
-            else:
-                key = f"{cond_type}-{unit}"
-            
-            experiments[cond_label][key] = float(res['num_val']['value'])
     else:
         print('r not ok....')
         for res in r:
@@ -118,19 +87,12 @@ def plot_conditions(args):
         raise requests.exceptions.RequestException('Something gone wrong when '
                                                    'querying database.')
 
-    # convert results to dataframe
-    df = pd.DataFrame(experiments).fillna('No modification').transpose()
-
-    # add simple chemical dimension reduced from chemical modifications
-    df['added_chem'] = df.apply(chem_tranformation, axis=1, info=df.columns)
+    df = df.transpose()
+    df['numeric_chemical'] = df.apply(numeric_representation, axis=1)
+    pivots = df.pivot_table(columns=['temp', 'pH', 'numeric_chemical'],
+                            aggfunc='size').unstack(level=2)
 
     if not args.ignore_chemicals:
-        # df with number of experiments for specified conditions
-        pivots = df.pivot_table(columns=['GENESIS_SMPL_008-UO_0000027',
-                                        'GENESIS_SMPL_022-UO_0000186',
-                                        'added_chem'],
-                                aggfunc='size').unstack(level=2)
-
         p = pivots.to_numpy()
         idx = np.argwhere(pivots.notna().to_numpy()).tolist()
         cols = pivots.columns
@@ -160,10 +122,8 @@ def plot_conditions(args):
     else:
         # as above, but only temperature and pH,
         # ie ignore chemical modifications
-        pivots = df.pivot_table(columns=['GENESIS_SMPL_008-UO_0000027',
-                                        'GENESIS_SMPL_022-UO_0000186'],
+        pivots = df.pivot_table(columns=['temp', 'pH'],
                                 aggfunc='size').unstack(level=0)
-
         p = pivots.to_numpy()
         idx = np.argwhere(pivots.notna().to_numpy()).tolist()
         cols = pivots.columns
@@ -181,15 +141,19 @@ def plot_conditions(args):
         plt.ylabel(r'Temperature $\degree$C')
     
     if args.save_fig:
-        fname = 'cond.eps'
+        fname = 'cond-mod.eps'
         if len(args.process_labels[0]) > 0:
-            fname = f"cond-w-{'-'.join(args.process_labels)}.eps"
+            fname = f"cond-w-{'-'.join(args.process_labels)}-m.eps"
         elif len(args.ignore_process[0]) > 0:
-            fname = f"cond-wo-{'-'.join(args.ignore_process)}.eps"
+            fname = f"cond-wo-{'-'.join(args.ignore_process)}-m.eps"
         elif len(args.dataset_labels[0]) > 0:
-            fname = f"cond-wds-{'-'.join(args.dataset_labels)}.eps"
-        plt.savefig(os.path.join(BASE, f'figs/{fname}'), format='eps')
+            fname = f"cond-wds-{'-'.join(args.dataset_labels)}-m.eps"
+        fname = os.path.join(BASE, f'figs/{fname}')
+        print('Figure saved to:')
+        print(fname)
+        plt.savefig(fname, format='eps')
     plt.show()
+
 
 def str2bool(v):
     if isinstance(v, bool):
