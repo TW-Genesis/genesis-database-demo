@@ -1,4 +1,4 @@
-
+# TODO: fix this readme, explain what's done etc
 
 To run hLICORN algorithm install R (tested with version 4.2.1), e.g. using conda
 ```
