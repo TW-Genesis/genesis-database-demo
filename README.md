@@ -1,4 +1,8 @@
 # TODO: fix this readme, explain what's done etc
+# Genesis-DB: a database for autonomous laboratory systems
+This repo contains code for the demonstration in the paper Genesis-DB: a database for autonomous laboratory systems
+
+[fig](figs/paper-fig.pdf)
 
 To run hLICORN algorithm install R (tested with version 4.2.1), e.g. using conda
 ```
