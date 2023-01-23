@@ -1,3 +1,5 @@
+library(renv)
+renv::restore()
 # Imports
 library(edgeR)
 library(CoRegNet)
