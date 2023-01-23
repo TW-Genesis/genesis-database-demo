@@ -11,7 +11,11 @@ options("mc.cores" = 16)
 BASE = dirname(here())
 
 # skip experiment when finding grn - empty list uses all experiments
+# ignores low pH and high temperature experiments
 ignored_conditions = c("SCP", "SCT")
+# ignores high temperature
+ignored_conditions = c("SCT")
+# ignores no experiments
 ignored_conditions = c()
 
 # Load data

@@ -126,16 +126,16 @@ if __name__ == '__main__':
                         help='Experimental conditions to plot leave out, '
                              'leave blank to plot grn for all conditions. '
                              'Make sure grn for specified conditions exists.')
-    parser.add_argument('--layout', default='auto', type=str,
+    parser.add_argument('--layout', default='kk', type=str,
                         help='Layoyt of plotted graph, eg kamada_kawai, see '
                              'https://igraph.org/python/tutorial/latest/'
                              'tutorial.html#layouts-and-plotting '
                              'for more instructions')
-    parser.add_argument('--save_fig', default=True, type=str2bool,
+    parser.add_argument('--save_fig', default=False, type=str2bool,
                         help='Whether graph should be saved directly to file '
                              'or showed as plt figure. Note, figures does not '
                              'look exactly the same.')
-    parser.add_argument('--add_unconnected', type=str2bool, default=False,
+    parser.add_argument('--add_unconnected', type=str2bool, default=True,
                         help='Add unconnected targets to displayed graph.')
     
     args = parser.parse_args()
