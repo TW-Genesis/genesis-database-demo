@@ -29,22 +29,31 @@ From the `scripts` directory, run
 ```
 $ python csv_from_query.py
 ```
+which will generate a copy of `sce_RNA_RAW_counts.csv` based on the data in the database, which is the input to the hLICORN algorithm.
 
+## Finding the GRN using hLICORN
 To run hLICORN algorithm install R (tested with version 4.2.1), e.g. using conda
 ```
 $ conda create --name R && \\
     conda activate R && \\
     conda install -c conda-forge r-base=4.2.1
 ```
-After installing dependencies from `renv.lock`, run algorithm (from the hlicorn directory) with the following command
+From the `hlicorn` directory, running the following command
 ```
 $ Rscript differentialExpression.R
 ```
+will install dependencies and save regulatory networks to `reg_frames<ignored condition>.Rdata` in the `data` directory. Chose if conditions should be ignored on lines `15-19` in `differentialExpression.Rdata` - ignoring conditions corresponds to missing experiments.
 
-For the Python scripts to interface with the database and visualise the GRN, install the dependencies in `requirements.txt` (tested with Python 3.8.13), e.g. with the following commands
+## Visualise GRN
+Visualise the GRN by running
+```
+$ python plot_grn.py
+```
+from the `scripts` directory. Specify which GRN to visualise using the `cond` flag, e.g. as `--cond SCT' to ignore the high temperature experiment. Make sure the corresponding `reg_frames.Rdata` file has been generated. For more help on options run `python plot_grn.py --help`.
 
+## Visualise experimental conditions
+Run
 ```
-$ conda create --name db-demo python=3.8.13 && \\
-    conda activate db-demo && \\
-    pip install -r requirements.txt
+$ python plot_cond.py
 ```
+to visualise the explored experimental conditions. Ignore specified conditions using the `ignore_process` flag, e.g. as `--ignore_process SCT`. For more help on options run `python plot_cond.py --help`.
