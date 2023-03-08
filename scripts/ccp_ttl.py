@@ -19,7 +19,7 @@ PREFIXES = """@prefix dc:       <http://purl.org/dc/elements/1.1/> .
 
 @prefix sgds: <https://www.yeastgenome.org/strain/> .
 
-@prefix genesis:  <http://www.semanticweb.org/genesis/ontologies/ccp-ontology#> ."""
+@prefix genesis:  <http://project-genesis.io/ontology#> ."""
 
 # [name, temp, ph, volumetric flow rate (mL/h), volume, [extra chemical things]],
 conditions = [['SCS', 30, 5.5, 50, 500, []],

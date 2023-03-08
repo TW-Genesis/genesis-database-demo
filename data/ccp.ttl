@@ -14,7 +14,7 @@
 
 @prefix sgds: <https://www.yeastgenome.org/strain/> .
 
-@prefix genesis:  <http://www.semanticweb.org/genesis/ontologies/ccp-ontology#> .
+@prefix genesis:  <http://project-genesis.io/ontology#> .
 
 
 genesis:CEN_PK113-7D a obo:FOODON_03411345 .

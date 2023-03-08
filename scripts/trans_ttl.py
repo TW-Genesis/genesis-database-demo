@@ -20,7 +20,7 @@ PREFIX = """@prefix dc:       <http://purl.org/dc/elements/1.1/> .
 
 @prefix sgds: <https://www.yeastgenome.org/strain/> .
 
-@prefix genesis:  <http://www.semanticweb.org/genesis/ontologies/ccp-ontology#> .\n\n\n"""
+@prefix genesis:  <http://project-genesis.io/ontology#> .\n\n\n"""
 
 ## Import data
 data = pd.read_csv(os.path.join(BASE, 'data/sce_RNA_RAW_counts.csv'),

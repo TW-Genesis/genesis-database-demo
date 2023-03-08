@@ -14,7 +14,7 @@ PREFIXES = """
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX obo: <http://purl.obolibrary.org/obo/>
 
-    PREFIX genesis: <http://www.semanticweb.org/genesis/ontologies/ccp-ontology#>
+    PREFIX genesis: <http://project-genesis.io/ontology#>
     """
 
 # SPARQL query to retrieve all gene counts together with the corresponding
