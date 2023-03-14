@@ -1,4 +1,3 @@
-# TODO: fix this readme, explain what's done etc
 # Genesis-DB: a database for autonomous laboratory systems
 This repo contains code for the demonstration in the paper Genesis-DB: a database for autonomous laboratory systems
 
